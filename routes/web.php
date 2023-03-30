@@ -45,6 +45,9 @@ Route::post('/admin', [ProductController::class, 'store']);
 //to show the products
 Route::get('/gallery', [ProductController::class, 'show']);
 
+//add to cart 
+Route::post('/add-to-cart/{id}', [ProductController::class, 'addToCart'])->name('add-to-cart');
+
 // to show single product
 Route::get('/art/{product}', [ProductController::class, 'artDetail'])->name('art-details');
 

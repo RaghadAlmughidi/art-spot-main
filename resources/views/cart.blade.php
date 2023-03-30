@@ -8,7 +8,7 @@
     <div class="title">
       <h1 class="header_heading">Cart</h1>
     </div>
-    <a href="home.html" class="btn">
+    <a href="/" class="btn">
       <span class="circle">
         <span class="arrow"></span>
         <span class="text">Back</span>

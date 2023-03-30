@@ -27,20 +27,20 @@
                 @endif
                 </li>
                 <li class="item">
-                    <a class="item-link" href="#">Home</a>
+                    <a class="item-link" href="/">Home</a>
                 </li>
                 <li class="item">
                     <a class="item-link" href="popular.html">Popular</a>
                 </li>
                 <li class="item">
-                    <a class="item-link" href="gallery.html">Gallery</a>
+                    <a class="item-link" href="gallery">Gallery</a>
                 </li>
              
                 <li class="item">
                     <a class="item-link" href="cart.html">cart</a>
                 </li>
                 <li class="item">
-                    <a class="item-link" href="user.html">Account</a>
+                    <a class="item-link" href="admin">Account</a>
                 </li>
 
              

@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 use App\Models\image;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Models\cart;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+
 
 class ProductController extends Controller
 {
@@ -75,7 +79,7 @@ class ProductController extends Controller
         // Product::create($create);
 
 
-        return redirect('/gallery')->with('message', 'product is addedd successfully! ');
+        return redirect('/gallery');
     }
 
     /**
@@ -83,8 +87,37 @@ class ProductController extends Controller
      */
     public function show(product $products)
     {
-        $products = Product::all();
-        return view('gallery', ['products' => $products]);
+        if (Auth::id()) {
+            $products = Product::all();
+            $user = auth()->user();
+            $count=Cart::where('user_name',$user->name)->count();
+            return view('gallery', ['products' => $products],compact('count'));
+           }else{
+            $products = Product::all();
+            return view('gallery', ['products' => $products]);
+    
+           }
+    }
+
+    public function addToCart(Request $request, $id){
+        if(Auth::id()){
+            $user=auth()->user();
+            $products = Product::find($id);
+            $cart = new Cart ;
+            $cart->user_name=$user->name;
+            $cart->product_name=$products->product_name;
+            $cart->product_desc=$products->product_desc;
+            $cart->product_price=$products->product_price;
+            $cart->product_image=$products->product_image;
+            $cart->artist_name=$products->artist_name;
+            $cart->save();
+
+           
+            return redirect()->back()->with('message','Product addedd successfully');
+        }
+        else{
+            return redirect('login');
+        }
     }
 
     public function artDetail(product $product)
@@ -96,7 +129,7 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Prodect $prodect)
+    public function edit(Product $prodect)
     {
         //
     }
@@ -104,7 +137,7 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Prodect $prodect)
+    public function update(Request $request, Product $prodect)
     {
         //
     }
@@ -112,7 +145,7 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Prodect $prodect)
+    public function destroy(Product $prodect)
     {
         //
     }
