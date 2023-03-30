@@ -90,7 +90,7 @@ class ProductController extends Controller
         if (Auth::id()) {
             $products = Product::all();
             $user = auth()->user();
-            $count=Cart::where('user_name',$user->name)->count();
+            $count=Cart::where('email',$user->email)->count();
             return view('gallery', ['products' => $products],compact('count'));
            }else{
             $products = Product::all();
@@ -125,6 +125,14 @@ class ProductController extends Controller
     {
         $products = Product::find($product)->first();
         return view('art', ['products' => $products]);
+    }
+
+    public function cart()
+    {
+        $user = auth()->user();
+        $cart=Cart::where('email',$user->email)->get();
+        $count=Cart::where('email',$user->email)->count();
+        return view('cart' , compact('cart','count'));
     }
 
     /**

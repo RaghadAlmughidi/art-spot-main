@@ -51,7 +51,5 @@ Route::post('/add-to-cart/{id}', [ProductController::class, 'addToCart'])->name(
 // to show single product
 Route::get('/art/{product}', [ProductController::class, 'artDetail'])->name('art-details');
 
-
-Route::get('/cart', function () {
-    return view('cart');
-});
+// to show the cart
+Route::get('/cart', [ProductController::class, 'cart']);

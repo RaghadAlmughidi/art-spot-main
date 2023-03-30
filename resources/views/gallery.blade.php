@@ -52,12 +52,12 @@
                             <p>by : {{ $product->artist_name }}</p>
                         </div>
                         <div class="card-price flex">
+                           
                             <form action="{{ url('add-to-cart',$product->id) }}" method="post">
                                 @csrf
                             {{-- <input class="price-text" type="submit" > --}}
                             <button type="submit"class="price-btn ">{{ $product->product_price }}$</button>
                             <i class="ri-shopping-cart-2-fill"></i>
-                            
                         </div>
                     </div>
                 </a>
@@ -74,7 +74,7 @@
     @guest
     <div class="container circle1">
         <div class="circle2">
-            <a href="/cart">
+            <a href="gallery">
             <div class="cart_circle">
                 <i class="ri-shopping-basket-2-line cart_size"></i>
                 <div class="num">
@@ -92,7 +92,7 @@
         
 <div class="container circle1">
     <div class="circle2">
-        <a href="/cart">
+        <a href="{{ url('cart')}}">
         <div class="cart_circle">
             <i class="ri-shopping-basket-2-line cart_size"></i>
             <div class="num">
