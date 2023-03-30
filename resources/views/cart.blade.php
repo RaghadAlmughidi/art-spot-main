@@ -26,13 +26,15 @@
         <div class="shopping__cart-cards">
         
           <hr>
+          @foreach ($cart as $carts)
+              
           <div class="shopping__cart-card flex">
             <div class="cart--img">
-              <img src="./artSpot-img/Rectangle 41.png" alt="">
+              <img src="{{ asset('product_img/') . '/' . $carts->product_image }}" alt="">
             </div>
             <div class="cart--content">
-              <p class="art__name">solid women</p>
-              <p class="artist__name">By | erik</p>
+              <p class="art__name">{{ $carts->product_name }}</p>
+              <p class="artist__name">By | {{ $carts->artist_name }}</p>
               <div class="inc__dec--btn">
                 <span class="minus">-</span>
                 <span class="num">1</span>
@@ -41,7 +43,11 @@
               <button class="close-card"> <i class="ri-close-line "></i></button>
             </div>
           </div>
-          <div class="shopping__cart-card flex">
+
+          @endforeach
+
+
+          {{-- <div class="shopping__cart-card flex">
             <div class="cart--img">
               <img src="./artSpot-img/Rectangle 44.png" alt="">
             </div>
@@ -56,7 +62,7 @@
               <button class="close-card"> <i class="ri-close-line "></i></button>
 
             </div>
-          </div>
+          </div> --}}
 
 
         </div>
