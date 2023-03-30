@@ -105,6 +105,7 @@ class ProductController extends Controller
             $products = Product::find($id);
             $cart = new Cart ;
             $cart->user_name=$user->name;
+            $cart->email=$user->email;
             $cart->product_name=$products->product_name;
             $cart->product_desc=$products->product_desc;
             $cart->product_price=$products->product_price;
