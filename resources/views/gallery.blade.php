@@ -58,6 +58,7 @@
                             {{-- <input class="price-text" type="submit" > --}}
                             <button type="submit"class="price-btn ">{{ $product->product_price }}$</button>
                             <i class="ri-shopping-cart-2-fill"></i>
+                            </form>
                         </div>
                     </div>
                 </a>
