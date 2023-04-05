@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\cart;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+// use Session; 
+use Illuminate\Support\Facades\Session;
+
 
 
 class ProductController extends Controller
@@ -87,38 +90,86 @@ class ProductController extends Controller
      */
     public function show(product $products)
     {
-        if (Auth::id()) {
-            $products = Product::all();
-            $user = auth()->user();
-            $count=Cart::where('email',$user->email)->count();
-            return view('gallery', ['products' => $products],compact('count'));
-           }else{
-            $products = Product::all();
-            return view('gallery', ['products' => $products]);
-    
-           }
+        //if the user logged in show the number of product in the cart icon
+       if (Auth::id()) {
+        $products = Product::all();
+        $user = auth()->user();
+        $count=Cart::where('user_id',$user->id)->count();
+        return view('gallery', ['products' => $products],compact('count'));
+       }else{
+        //if the user doesnot logged in show the  number of product in the cart icon he added
+        //by using the session id 
+        $products = Product::all();
+        //session id if the user doesnot logged in 
+        $session_id = Session::get('session_id');
+        $count=Cart::where('session_id',$session_id)->count();
+        return view('gallery', ['products' => $products],compact('count'));
+
+       }
+           
     }
 
     public function addToCart(Request $request, $id){
-        if(Auth::id()){
-            $user=auth()->user();
-            $products = Product::find($id);
-            $cart = new Cart ;
-            $cart->user_name=$user->name;
-            $cart->email=$user->email;
-            $cart->product_name=$products->product_name;
-            $cart->product_desc=$products->product_desc;
-            $cart->product_price=$products->product_price;
-            $cart->product_image=$products->product_image;
-            $cart->artist_name=$products->artist_name;
-            $cart->save();
+        $product = Product::find($id);
 
-           
-            return redirect()->back()->with('message','Product addedd successfully');
+        //generate a session id to add items in the cart without the user logged in 
+        $session_id = Session::get('session_id');
+        if (empty($session_id)){
+            $session_id = Session::getId();
+            Session::put('session_id',$session_id);
         }
-        else{
-            return redirect('login');
+
+        if (Auth::id()) {
+            //check if the product is aleardy in the cart
+            $inCart = Cart::where('user_id',Auth::id())->where('product_id', $product->id)->first();
+            if($inCart){
+                //if yes increase the quantity
+                $inCart->increment('quantity',1);
+                return redirect()->back()->with('message','Product is already in the cart'); 
+
+            }else{
+                //if not add a new product 
+                $user=auth()->user();
+                //saving the products in the cart tabel with user logged in 
+                $cart = new Cart;
+                $cart->user_id= $user->id;
+                $cart->user_name= $user->name;
+                $cart->product_id= $product['id'];
+                $cart->product_name= $product['product_name'];
+                $cart->product_desc= $product['product_desc'];
+                $cart->product_price= $product['product_price'];
+                $cart->product_image= $product['product_image'];
+                $cart->artist_name= $product['artist_name'];
+                $cart->quantity= 1 ;
+                $cart->save();
+                return redirect()->back()->with('message','Product addedd successfully'); 
+            }
+
+        }else{
+            $inCart = Cart::where('session_id',$session_id)->where('product_id', $product->id)->first();
+            //check if the product is aleardy in the cart
+            if($inCart){
+                //if yes increase the quantity
+                $inCart->increment('quantity',1);
+                return redirect()->back()->with('message','Product is already in the cart'); 
+
+            }else{
+                //saving the products in the cart tabel without logged in 
+                $cart = new Cart;
+                $cart->session_id= $session_id;
+                $cart->product_id= $product['id'];
+                $cart->product_name= $product['product_name'];
+                $cart->product_desc= $product['product_desc'];
+                $cart->product_price= $product['product_price'];
+                $cart->product_image= $product['product_image'];
+                $cart->artist_name= $product['artist_name'];
+                $cart->quantity= 1 ;
+                $cart->save();  
+                return redirect()->back()->with('message','Product addedd successfully');
+            
+            }
         }
+
     }
 
     public function artDetail(product $product)
@@ -129,10 +180,15 @@ class ProductController extends Controller
 
     public function cart()
     {
-        $user = auth()->user();
-        $cart=Cart::where('email',$user->email)->get();
-        $count=Cart::where('email',$user->email)->count();
-        return view('cart' , compact('cart','count'));
+        if (Auth::id()) {
+            //if the user loggen in get the product info from the cart tabel
+            $user = auth()->user();
+            $cart=Cart::where('user_id',$user->id)->get();
+            $count=Cart::where('user_id',$user->id)->count();
+            return view('cart' , compact('cart','count'));
+        }else{
+            return redirect('login');
+        }
     }
 
     /**

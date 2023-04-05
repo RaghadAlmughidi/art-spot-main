@@ -73,7 +73,25 @@
 
 
     </section>
-    @guest
+
+
+
+    <div class="container circle1">
+        <div class="circle2">
+            <a href="{{url ('cart')}}">
+                <div class="cart_circle">
+                    <i class="ri-shopping-basket-2-line cart_size"></i>
+                    <div class="num">
+                        <div class="num_circle">
+                            <p>{{$count}}</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+{{-- @guest
     <div class="container circle1">
         <div class="circle2">
             <a href="gallery">
@@ -90,10 +108,10 @@
     </div>
     @else
     @if (Route::has('login'))
-    @auth
+        @auth
         
-<div class="container circle1">
-    <div class="circle2">
+        <div class="container circle1">
+        <div class="circle2">
         <a href="{{ url('cart')}}">
         <div class="cart_circle">
             <i class="ri-shopping-basket-2-line cart_size"></i>
@@ -103,13 +121,13 @@
                 </div>
             </div>
         </div>
-    </a>
-    </div>
-</div>
-@endauth
+        </a>
+        </div>
+        </div>
+        @endauth
     
-@endif
-@endguest
+    @endif
+@endguest --}}
 
 
     <img src="./artSpot-img/eclips1.png" alt="" class="ec-1" style="z-index: -1;">
