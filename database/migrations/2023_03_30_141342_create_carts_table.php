@@ -13,8 +13,11 @@ return new class extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
-            $table->string('user_name')->nullable();
-            $table->string('email')->nullable();
+            $table->string('session_id')->nullable();
+            $table->integer('user_id')->nullable();
+            $table->integer('product_id')->nullable();
+            $table->integer('quantity')->nullable();  
+            $table->string('user_name')->nullable();          
             $table->string('product_name')->nullable();
             $table->string('product_desc')->nullable();
             $table->string('product_price')->nullable();

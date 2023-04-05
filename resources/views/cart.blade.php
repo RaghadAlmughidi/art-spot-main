@@ -37,7 +37,7 @@
               <p class="artist__name">By | {{ $carts->artist_name }}</p>
               <div class="inc__dec--btn">
                 <span class="minus">-</span>
-                <span class="num">1</span>
+                <span class="num">{{ $carts->quantity }}</span>
                 <span class="plus">+</span>
               </div>
               <button class="close-card"> <i class="ri-close-line "></i></button>

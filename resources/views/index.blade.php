@@ -37,7 +37,7 @@
                 </li>
              
                 <li class="item">
-                    <a class="item-link" href="cart.html">cart</a>
+                    <a class="item-link" href="cart">cart</a>
                 </li>
                 <li class="item">
                     <a class="item-link" href="admin">Account</a>
