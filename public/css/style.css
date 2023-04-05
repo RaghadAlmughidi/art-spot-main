@@ -674,7 +674,8 @@ a {
   border-radius: var(--card-border-radius);
   padding: 0.5rem 1rem;
   width: fit-content;
-
+  background-color: transparent;
+  color: var(--description);
   text-align: center;
   cursor: pointer;
 }

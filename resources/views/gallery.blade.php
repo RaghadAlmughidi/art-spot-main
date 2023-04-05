@@ -60,16 +60,19 @@
                             <p>{{ $product->product_name }}</p>
                             <p>by : {{ $product->artist_name }}</p>
                         </div>
-                        <div class="card-price flex">
+                        <div class="flex">
                            
                             <form action="{{ url('add-to-cart',$product->id) }}" method="post">
                                 @csrf
                             {{-- <input class="price-text" type="submit" > --}}
-                            <button type="submit"class="price-btn ">{{ $product->product_price }}$</button>
-                            <i class="ri-shopping-cart-2-fill"></i>
+                            <button type="submit"class=" card-price price-btn ">{{ $product->product_price }}$ <i class="ri-shopping-cart-2-fill"></i></button>
+                           
                             </form>
+                         
                         </div>
+                      
                     </div>
+                
                 </a>
             </div>
         @endforeach
@@ -148,5 +151,6 @@
         AOS.init();
     </script>
     <script src="main.js"></script>
+   
 </body>
 @extends('footer')
