@@ -50,7 +50,6 @@ class ProductController extends Controller
 
 
         if ($request->hasFile('product_image', 'artist_image')) {
-
             $nameproduct = $request->product_image->hashName();
             $request->product_image->move(public_path('product_img'), $nameproduct);
             $nameartist = $request->artist_image->hashName();
@@ -118,7 +117,7 @@ class ProductController extends Controller
             $session_id = Session::getId();
             Session::put('session_id',$session_id);
         }
-
+        //if the user loogged in 
         if (Auth::id()) {
             //check if the product is aleardy in the cart
             $inCart = Cart::where('user_id',Auth::id())->where('product_id', $product->id)->first();

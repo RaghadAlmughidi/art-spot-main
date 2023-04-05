@@ -19,6 +19,15 @@
 </header>
 
 <body>
+    @if (session()->has('message'))
+    <div class="alert alert-success">
+        <button type="button" class="close" style="" data-dismiss="alert">x 
+            <p style="background-color: green; ">{{session()->get('message')}}</p>
+        </button>
+        
+    </div>
+        
+    @endif
     <section class="gallery" style="z-index: 1;">
         <div class=" gallery_content flex">
             <div class="gallery_img">
